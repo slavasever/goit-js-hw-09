@@ -10,14 +10,18 @@ function getRandomHexColor() {
 
 let timerId = null;
 
+refs.btnStart.style.backgroundColor = 'green';
+
 refs.btnStart.addEventListener('click', () => {
   timerId = setInterval(() => {
     refs.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
   refs.btnStart.setAttribute('disabled', '');
+  refs.btnStart.style.backgroundColor = 'red';
 });
 
 refs.btnStop.addEventListener('click', () => {
   clearInterval(timerId);
   refs.btnStart.removeAttribute('disabled');
+  refs.btnStart.style.backgroundColor = 'green';
 });

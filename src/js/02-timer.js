@@ -12,7 +12,6 @@ const refs = {
   minutes: document.querySelector('span[data-minutes]'),
   seconds: document.querySelector('span[data-seconds]'),
 };
-// console.log(refs);
 
 refs.btnStart.setAttribute('disabled', '');
 
@@ -26,6 +25,7 @@ const options = {
     console.log(selectedDates[0]);
     if (selectedDates[0] >= Date.now()) {
       refs.btnStart.removeAttribute('disabled');
+      refs.btnStart.style.backgroundColor = 'green';
     } else {
       Notiflix.Notify.failure('Please choose a date in the future');
       refs.btnStart.setAttribute('disabled', '');
@@ -46,21 +46,21 @@ class Timer {
   start() {
     const targetDate = new Date(refs.input.value);
     refs.btnStart.setAttribute('disabled', '');
+    refs.btnStart.style.backgroundColor = 'red';
 
     this.intervalId = setInterval(() => {
       const currentDate = Date.now();
       const difference = targetDate - currentDate;
       const time = this.convertMs(difference);
-      //   console.log(time);
+
       if (difference <= 1000) {
         clearInterval(this.intervalId);
       }
       this.onTick(time);
-      //   updateInterface(time);
     }, 1000);
   }
 
-  // ф-ция конвертирования времени из 'мс' в 'dd:hh:mm:ss'
+  // ф-ция конвертирования времени из 'ms' в 'dd:hh:mm:ss'
   convertMs(ms) {
     // Number of milliseconds per unit of time
     const second = 1000;
@@ -94,7 +94,7 @@ function updateInterface({ days, hours, minutes, seconds }) {
   refs.seconds.textContent = addLeadingZero(seconds);
 }
 
-// создаем экземпляр таймера
+// создаем экземпляр таймера (передаем ф-цию updateInterface в качестве коллбека onTick в конструктор класса)
 const timer = new Timer(updateInterface);
 
 refs.btnStart.addEventListener('click', timer.start.bind(timer));
