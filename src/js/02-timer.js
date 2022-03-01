@@ -46,6 +46,7 @@ class Timer {
   start() {
     const targetDate = new Date(refs.input.value);
     refs.btnStart.setAttribute('disabled', '');
+    refs.input.setAttribute('disabled', '');
     refs.btnStart.style.backgroundColor = 'red';
 
     this.intervalId = setInterval(() => {
